@@ -1,0 +1,10 @@
+streamlit
+streamlit_option_menu
+xarray
+h5netcdf
+h5py
+netcdf4
+pandas
+st-supabase-connection
+datetime
+supabase

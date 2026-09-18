@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="368b7fdc-4f79-4f6e-802e-77ba45bc361d" name="변경" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="15" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0003911474011669" />
+      <entry key="MS500" value="1.2082244608410388" />
+      <entry key="S2" value="1.7579300076549376" />
+      <entry key="S5" value="2.429315864450503" />
+      <entry key="S10" value="3.183965343612832" />
+      <entry key="S30" value="4.200526293983263" />
+      <entry key="S60" value="4.568613561967673" />
+      <entry key="M2" value="4.779766895707564" />
+      <entry key="M5" value="5.287170649685842" />
+      <entry key="M10" value="7.763380517160488" />
+      <entry key="M15" value="13.040608316086828" />
+      <entry key="M30" value="37.790607994673714" />
+      <entry key="H1" value="85.25010190670902" />
+      <entry key="H2" value="156.1404026397444" />
+      <entry key="H4" value="274.6460177564953" />
+      <entry key="D1" value="881.3196858015889" />
+      <entry key="W1" value="1230.0728663089737" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="1.4696012504299862E-8" />
+      <entry key="MS500" value="0.027129382112532584" />
+      <entry key="S2" value="0.4058447904886392" />
+      <entry key="S5" value="0.6971785074490906" />
+      <entry key="S10" value="0.8349721596850344" />
+      <entry key="S30" value="0.9416525027967955" />
+      <entry key="S60" value="0.9703878105154518" />
+      <entry key="M2" value="0.9850829676793703" />
+      <entry key="M5" value="0.9985441869185739" />
+      <entry key="M10" value="1.1595489853986074" />
+      <entry key="M15" value="1.5875835713093043" />
+      <entry key="M30" value="3.32890159105676" />
+      <entry key="H1" value="6.09754229547948" />
+      <entry key="H2" value="9.479146873314376" />
+      <entry key="H4" value="13.77233203039646" />
+      <entry key="D1" value="30.371754153531402" />
+      <entry key="W1" value="39.12337883720577" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="4.368827837133836E-4" />
+      <entry key="MS500" value="0.32646970199823766" />
+      <entry key="S2" value="1.4447802615378267" />
+      <entry key="S5" value="2.63332485673518" />
+      <entry key="S10" value="3.710609697555517" />
+      <entry key="S30" value="5.021163549908878" />
+      <entry key="S60" value="5.475845646647973" />
+      <entry key="M2" value="5.732557487984537" />
+      <entry key="M5" value="6.271868845099736" />
+      <entry key="M10" value="8.913448264376516" />
+      <entry key="M15" value="14.618201852546058" />
+      <entry key="M30" value="41.10631678878946" />
+      <entry key="H1" value="91.33404620885426" />
+      <entry key="H2" value="165.60877410583927" />
+      <entry key="H4" value="288.41055767693905" />
+      <entry key="D1" value="911.6886053667224" />
+      <entry key="W1" value="1269.195729219078" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3JOqlCjQ7rW3HDu0GKdd7nVKkvi" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.create_sample_ncfile.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "temp-branch",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "to.speed.mode.migration.done": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="create_sample_ncfile" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="streamlit" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/create_sample_ncfile.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.create_sample_ncfile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-6fa658e1df1a-5bd6d13a2a75-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-262.8665.369" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="368b7fdc-4f79-4f6e-802e-77ba45bc361d" name="변경" comment="" />
+      <created>1789542610900</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1789542610900</updated>
+      <workItem from="1789542611933" duration="10305000" />
+      <workItem from="1789557607013" duration="13015000" />
+      <workItem from="1789621809513" duration="2225000" />
+      <workItem from="1789624637507" duration="17587000" />
+      <workItem from="1789712456035" duration="30911000" />
+    </task>
+    <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/streamlit$create_sample_ncfile.coverage" NAME="create_sample_ncfile 커버리지 결과" MODIFIED="1789629658541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
