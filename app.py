@@ -24,22 +24,18 @@ st.markdown(
     footer {
         visibility: hidden;
     }
-    .st-key-confirm_button button {
+    div[class*="st-key-confirm_button"] button {
         background-color: #4DB343 !important;
         color: white !important;
         border: none !important;
         outline: none !important;
     }
-    .st-key-cancel_button button {
+    div[class*="st-key-cancel_button"] button {
         background-color: #C14550 !important;
         color: white !important;
         border: none !important;
     }
-    .st-key-submit_button button {
-        margin-top: 28px !important;
-        outline: none !important;
-    }
-    .st-key-review_button button {
+    div[class*="st-key-progress_button"] button {
         margin-top: 28px !important;
         outline: none !important;
     }
@@ -225,7 +221,7 @@ with center:
         with name_input:
             student_name = st.text_input("이름을 입력하세요.")
         with submit_button:
-            if st.button("제출하기", key="submit_button", use_container_width=True):
+            if st.button("제출하기", key="progress_button-1", use_container_width=True):
                 submit_confirm_dialog()
 
         if st.session_state.get("submit_confirmed"):
@@ -258,7 +254,7 @@ with center:
         with password_input:
             password = st.text_input("관리자 비밀번호를 입력하세요.")
         with review_button:
-            if st.button("검토하기", key="review_button", use_container_width=True):
+            if st.button("검토하기", key="progress_button-2", use_container_width=True):
                 review_confirm_dialog()
 
         st.markdown(

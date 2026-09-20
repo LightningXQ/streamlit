@@ -51,8 +51,8 @@ def download_submissions():
 
     # 임시 디렉토리 생성 (with 블록을 빠져나오면 자동으로 삭제됨)
     with tempfile.TemporaryDirectory() as temp_dir:
-        st.write(f"📁 임시 로컬 공간 생성 완료: `{temp_dir}`")
-        st.info("🔄 다운로드 시작")
+        st.write(f"📁 서버 내 임시 공간 생성: `{temp_dir}`")
+        st.info("🔄 파일 다운로드를 시작합니다.")
         progress_bar = st.progress(0)
 
         try:
@@ -93,7 +93,7 @@ def download_submissions():
                 st.error(f"❌ 제출 파일 다운로드 중 에러 발생: {str(e)}")
                 return None
 
-        st.success("✅ 파일 다운로드 완료!")
+        st.success("✅ 파일 다운로드가 완료되었습니다.")
 
         return analyze_submissions(temp_dir)
 
@@ -113,7 +113,7 @@ def analyze_submissions(temp_dir):
         st.error("정답 파일(.nc)은 오직 하나여야 합니다.")
         return None
 
-    st.info("🔄 채점 시작")
+    st.info("🔄 채점을 시작합니다.")
     progress_bar = st.progress(0)
 
     try:
@@ -160,7 +160,7 @@ def analyze_submissions(temp_dir):
     return result
 
 def update_leaderboard(result):
-    st.info("🔄 리더보드 업데이트 시작")
+    st.info("🔄 리더보드 업데이트를 시작합니다.")
     progress_bar = st.progress(0)
 
     for idx, row in enumerate(result):
@@ -177,7 +177,7 @@ def update_leaderboard(result):
             st.error(f"❌ DB 반영 중 오류 발생 ({row['team_name']}): {e}")
             return
 
-    st.success("✨ 업데이트가 완료되었습니다.")
+    st.success("✨ 리더보드 업데이트가 완료되었습니다.")
 
 def load_nc(path: str | Path):
     with xr.open_dataset(path) as ds:
