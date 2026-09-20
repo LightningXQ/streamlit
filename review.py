@@ -31,7 +31,7 @@ def verify(password):
     return password == ADMIN_PASSWORD
 
 def download_submissions():
-    bucket_name = "pknu_climate_big_data_contest_2026"
+    bucket_name = "pknu_climate_big_data_contest_2026/"
     submission_path = "submissions/09_19/"
     answer_path = "answer/"
 
