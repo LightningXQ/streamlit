@@ -9,6 +9,7 @@ from streamlit_option_menu import option_menu
 from review import review
 from submit import submit
 
+
 st.set_page_config(layout="wide")
 
 st.markdown(
@@ -59,10 +60,6 @@ def submit_confirm_dialog():
         if st.button("취소", use_container_width=True, key="cancel_button-1"):
             st.session_state.submit_confirmed = False
             st.rerun()
-
-@st.dialog("지금은 제출할 수 없습니다.")
-def submit_deny_dialog():
-    st.write("답안은 당일 오후 10시 이전에 제출해야 합니다.")
 
 @st.dialog("검토하시겠습니까?")
 def review_confirm_dialog():
@@ -197,14 +194,23 @@ with center:
 
     if selected == "Submit":
         st.markdown(
-            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.5;'>"
+            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 1.0;'>"
             "Submit"
             "</h2>",
             unsafe_allow_html=True
         )
-
-        st.markdown("#### 대회의 참가자이신가요?")
-        st.markdown("##### 답안을 작성한 NetCDF(.nc) 파일을 제출하세요.")
+        st.markdown(
+            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "대회의 참가자이신가요?"
+            "</h4>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<h6 style='margin-top: 0px; margin-bottom: 0px; font-size: 18px;'>"
+            "답안을 작성한 NetCDF(.nc) 파일을 제출하세요."
+            "</h6>",
+            unsafe_allow_html=True
+        )
 
         is_file_not_exist = None
         is_filename_invalid = None
@@ -227,15 +233,25 @@ with center:
             submit(file, student_num, student_name)
 
         st.markdown(
-            "<p style='color: #909090; font-size: 14px;'>"
+            "<p style='color: #909090; font-size: 14px; margin-bottom: 20px'>"
             "답안은 하루에 한 번만 제출할 수 있으며, 오후 10시 이전에 제출된 답안만 당일의 답안으로 인정됩니다.<br>"
             "자세한 사항은 규칙을 참고하세요."
             "</p>",
             unsafe_allow_html=True
         )
 
-        st.markdown("#### 대회의 관리자이신가요?")
-        st.markdown("##### 관리자 비밀번호를 입력하고 제출된 답안을 검토하세요.")
+        st.markdown(
+            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "대회의 관리자이신가요?"
+            "</h4>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<h6 style='margin-top: 0px; margin-bottom: 0px; font-size: 18px;'>"
+            "관리자 비밀번호를 입력하고 제출된 답안을 검토하세요."
+            "</h6>",
+            unsafe_allow_html=True
+        )
 
         password_input, review_button = st.columns([6, 1])
 
@@ -259,7 +275,7 @@ with center:
 
     if selected == "Rules":
         st.markdown(
-            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.5;'>"
+            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.8;'>"
             "Rules"
             "</h2>",
             unsafe_allow_html=True
@@ -273,8 +289,13 @@ with center:
             unsafe_allow_html=True
         )
         st.markdown(
+            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "참가 규칙"
+            "</h4>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
             """
-            #### 규칙
             - 모든 팀은 매일 22:00 이전까지 하루에 한 번 결과물을 제출할 수 있습니다.
             - 동일한 팀에서 하루에 여러 개의 결과물을 제출한 경우, 22:00 이전에 제출된 파일 중 가장 마지막으로 제출된 결과물만 평가합니다.
             - 제출 파일 이름은 반드시 "pred_Y_팀명.nc" 형식으로 지정해야 합니다. 파일 형식이 일치하지 않는 경우 평가를 진행하지 않습니다.
@@ -287,8 +308,17 @@ with center:
             - 특정 외부 데이터의 사용 가능 여부가 불분명한 경우 반드시 사전에 이메일로 문의해 주시기 바랍니다.
             - 외부 데이터는 모든 참가자가 접근할 수 있는 공개 데이터만 사용할 수 있습니다. (예: ERA5)
             - 참가 팀 간 예측 결과 또는 모델 결과물을 공유하는 것을 금지합니다. 비정상적으로 높은 수준의 일치가 확인되는 경우 주최측은 모델 코드 및 관련 자료의 추가 제출을 요구할 수 있습니다. 무단 공유가 확인될 경우 관련 팀은 실격 처리될 수 있습니다.
-            
-            #### 최종 파일 제출 및 검증
+            """,
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "최종 파일 제출 및 검증"
+            "</h4>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            """
             - 최종 평가에 사용할 파일은 12월 5일 18:00까지 사이트에 제출해야 합니다. 마감 시간 이후 제출된 파일은 절대 인정하지 않습니다.
             - 최종 평가에 사용할 파일을 별도로 제출하지 않는 경우, 대회 기간 중 제출한 결과물 가운데 가장 높은 성적을 기록한 파일을 자동으로 최종 평가 파일로 선정합니다.
             - 최종 결과는 12월 5일 22:00 이후 사이트를 통해 공개하며, 평가 결과 1위부터 5위까지의 팀을 예비 수상자로 선정합니다.

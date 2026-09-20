@@ -20,6 +20,7 @@ def submit(file, snum, sname):
 
     if current_time >= cutoff_time:
         st.warning("답안은 당일 오후 10시 이전에 제출해야 합니다.")
+        return
 
     upload(file)
 

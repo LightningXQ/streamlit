@@ -1,4 +1,4 @@
-# TODO: Database와 Bucket에서 RLS 정책 수정하기(임시로 RLS 꺼놓음)
+# TODO: Database와 Bucket에서 RLS 정책 수정하기(임시로 secret key로 접속함)
 
 import os
 import tempfile
@@ -14,51 +14,9 @@ ADMIN_PASSWORD = st.secrets["ADMIN_PASSWORD"]
 TARGET_VAR = os.environ.get("TARGET_VAR", "Vcmax25")
 REQUIRED_DIMS = ("time", "lat", "lon")
 
+
 conn = st.connection("supabase", type=SupabaseConnection)
 client = conn.client
-
-
-def load_nc(path: str | Path):
-    with xr.open_dataset(path) as ds:
-        if TARGET_VAR not in ds:
-            raise ValueError(f"'{TARGET_VAR}' variable is missing.")
-        da = ds[TARGET_VAR]
-        missing_dims = [dim for dim in REQUIRED_DIMS if dim not in da.dims]
-        if missing_dims:
-            raise ValueError(f"Required dimension(s) missing: {', '.join(missing_dims)}")
-        missing_coords = [dim for dim in REQUIRED_DIMS if dim not in ds.coords]
-        if missing_coords:
-            raise ValueError(f"Required coordinate(s) missing: {', '.join(missing_coords)}")
-        da = da.transpose(*REQUIRED_DIMS)
-        return (
-            np.asarray(da.values, dtype=np.float64),
-            np.asarray(ds["time"].values),
-            np.asarray(ds["lat"].values),
-            np.asarray(ds["lon"].values),
-        )
-
-def calculate_mae(submission, answer, sub_time, ans_time, sub_lat, ans_lat, sub_lon, ans_lon):
-    if submission.shape != answer.shape:
-        raise ValueError(f"Shape mismatch: submission={submission.shape}, expected={answer.shape}")
-    if not np.array_equal(sub_time, ans_time):
-        raise ValueError("Time coordinates do not match.")
-    if not np.allclose(sub_lat, ans_lat):
-        raise ValueError("Latitude coordinates do not match.")
-    if not np.allclose(sub_lon, ans_lon):
-        raise ValueError("Longitude coordinates do not match.")
-
-    answer_nan = ~np.isfinite(answer)
-    submission_nan = ~np.isfinite(submission)
-    if not np.array_equal(answer_nan, submission_nan):
-        raise ValueError("The missing-value mask has been modified.")
-
-    valid = ~answer_nan
-    if not valid.any():
-        raise ValueError("The answer file contains no finite evaluation cells.")
-    if (~np.isfinite(submission[valid])).any():
-        raise ValueError("Evaluation cells contain NaN or infinite predictions.")
-
-    return float(np.mean(np.abs(submission[valid] - answer[valid]))), int(valid.sum())
 
 def review(password):
     if not verify(password):
@@ -68,7 +26,6 @@ def review(password):
     if not result:
         st.error(f"❌ 채점 결과가 없습니다."); return
     update_leaderboard(result)
-
 
 def verify(password):
     return password == ADMIN_PASSWORD
@@ -102,7 +59,7 @@ def download_submissions():
             full_answer_path = f"{answer_path}/{answer_file_name}"
             local_answer_file_path = os.path.join(temp_dir, answer_file_name)
 
-            st.write(f"📥 다운로드 중 (1/{len(submission_files) + 1}): {answer_file_name}")
+            st.write(f"📥 다운로드 중 (1/{len(submission_files) + 1}): `{answer_file_name}`")
 
             answer_file_data = client.storage.from_(bucket_name).download(full_answer_path)
             with open(local_answer_file_path, "wb") as f:
@@ -137,7 +94,6 @@ def download_submissions():
         st.success("✅ 파일 다운로드 완료!")
 
         return analyze_submissions(temp_dir)
-
 
 def analyze_submissions(temp_dir):
     files = [f for f in os.listdir(temp_dir) if f.endswith('.nc')]
@@ -220,3 +176,45 @@ def update_leaderboard(result):
             return
 
     st.success("✨ 업데이트가 완료되었습니다.")
+
+def load_nc(path: str | Path):
+    with xr.open_dataset(path) as ds:
+        if TARGET_VAR not in ds:
+            raise ValueError(f"'{TARGET_VAR}' variable is missing.")
+        da = ds[TARGET_VAR]
+        missing_dims = [dim for dim in REQUIRED_DIMS if dim not in da.dims]
+        if missing_dims:
+            raise ValueError(f"Required dimension(s) missing: {', '.join(missing_dims)}")
+        missing_coords = [dim for dim in REQUIRED_DIMS if dim not in ds.coords]
+        if missing_coords:
+            raise ValueError(f"Required coordinate(s) missing: {', '.join(missing_coords)}")
+        da = da.transpose(*REQUIRED_DIMS)
+        return (
+            np.asarray(da.values, dtype=np.float64),
+            np.asarray(ds["time"].values),
+            np.asarray(ds["lat"].values),
+            np.asarray(ds["lon"].values),
+        )
+
+def calculate_mae(submission, answer, sub_time, ans_time, sub_lat, ans_lat, sub_lon, ans_lon):
+    if submission.shape != answer.shape:
+        raise ValueError(f"Shape mismatch: submission={submission.shape}, expected={answer.shape}")
+    if not np.array_equal(sub_time, ans_time):
+        raise ValueError("Time coordinates do not match.")
+    if not np.allclose(sub_lat, ans_lat):
+        raise ValueError("Latitude coordinates do not match.")
+    if not np.allclose(sub_lon, ans_lon):
+        raise ValueError("Longitude coordinates do not match.")
+
+    answer_nan = ~np.isfinite(answer)
+    submission_nan = ~np.isfinite(submission)
+    if not np.array_equal(answer_nan, submission_nan):
+        raise ValueError("The missing-value mask has been modified.")
+
+    valid = ~answer_nan
+    if not valid.any():
+        raise ValueError("The answer file contains no finite evaluation cells.")
+    if (~np.isfinite(submission[valid])).any():
+        raise ValueError("Evaluation cells contain NaN or infinite predictions.")
+
+    return float(np.mean(np.abs(submission[valid] - answer[valid]))), int(valid.sum())
