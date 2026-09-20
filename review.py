@@ -32,8 +32,8 @@ def verify(password):
 
 def download_submissions():
     bucket_name = "pknu_climate_big_data_contest_2026"
-    submission_path = "submissions\\09_19\\"
-    answer_path = "answer\\"
+    submission_path = "submissions/09_19"
+    answer_path = "answer"
 
     with st.spinner("Supabase에서 파일 목록을 가져오는 중..."):
         answer_storage = client.storage.from_(bucket_name).list(answer_path)
