@@ -6,5 +6,4 @@ h5py
 netcdf4
 pandas
 st-supabase-connection
-datetime
-supabase
+numpy
