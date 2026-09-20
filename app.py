@@ -92,13 +92,13 @@ left_margin, center, right_margin = st.columns([1, 5, 1])
 with center:
     st.markdown(
         "<div style='text-align: center;'>"
-        f"<img src='data:image/png;base64,{LOGO_BASE64}' style='width:150px; height:150px; margin-bottom: 4px;'>"
+        f"<img src='data:image/png;base64,{LOGO_BASE64}' style='width:150px; height:150px; margin-bottom: 8px;'>"
         "</div>",
         unsafe_allow_html=True
     )
     st.markdown(
         "<h5 style='margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; line-height: 1.2; text-align:center;'>"
-        "Climate Extremes Research Lab"
+        "Climate Extremes Research Laboratory"
         "</h5>",
         unsafe_allow_html=True
     )
@@ -126,16 +126,16 @@ with center:
         )
         st.markdown(
             '<p style="margin-top: 0px; color: gray; font-size: 14px;">'
-            '매일 0시마다 점수가 반영됩니다.'
+            '제출된 답안은 익일 0시에 반영됩니다.'
             '</p>',
             unsafe_allow_html=True
         )
 
         conn = st.connection("supabase", type=SupabaseConnection)
-        supabase = conn.client
+        client = conn.client
 
         try:
-            rows = supabase.table("leaderboard").select("*").execute()
+            rows = client.table("leaderboard").select("*").execute()
 
             if not rows.data:
                 st.info("리더보드 데이터가 없습니다.")
@@ -143,7 +143,7 @@ with center:
                 df = pd.DataFrame(rows.data)
 
                 if "best_score" in df.columns:
-                    df = df.sort_values(by="best_score", ascending=False)
+                    df = df.sort_values(by="best_score", ascending=True)
 
                 df = df.reset_index(drop=True)
                 df.index += 1
