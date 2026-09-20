@@ -37,14 +37,11 @@ def download_submissions():
 
     with st.spinner("Supabase에서 파일 목록을 가져오는 중..."):
         answer_storage = client.storage.from_(bucket_name).list(answer_path)
-        answer_files = [f for f in answer_storage]
-        print(answer_files)
-        # answer_files = [f for f in answer_storage if f["name"].endswith(".nc")]
+        answer_files = [f for f in answer_storage if f["name"].endswith(".nc")]
         submission_storage = client.storage.from_(bucket_name).list(submission_path)
         submission_files = [f for f in submission_storage if f["name"].endswith(".nc")]
-        answer_file = answer_files[0] if answer_files else None
 
-        if not answer_file:
+        if not answer_files:
             st.error(f"⚠️ `{answer_path}` 폴더에 정답 NetCDF 파일이 존재하지 않습니다.")
             return None
         elif not submission_files:
@@ -59,7 +56,8 @@ def download_submissions():
         progress_bar = st.progress(0)
 
         try:
-            answer_file_name = answer_file["name"]
+            answer_file_info = answer_files[0]
+            answer_file_name = answer_file_info["name"]
             full_answer_path = f"{answer_path}/{answer_file_name}"
             local_answer_file_path = os.path.join(temp_dir, answer_file_name)
 
