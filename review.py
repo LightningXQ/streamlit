@@ -2,7 +2,9 @@
 
 import os
 import tempfile
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import numpy as np
 import streamlit as st
@@ -31,8 +33,11 @@ def verify(password):
     return password == ADMIN_PASSWORD
 
 def download_submissions():
+    curr_date = datetime.now(ZoneInfo("Asia/Seoul"))
+    curr_mm_dd = curr_date.strftime("%m-%d")
+
     bucket_name = "pknu_climate_big_data_contest_2026"
-    submission_path = "submissions/09_19"
+    submission_path = f"submissions/{curr_mm_dd}"
     answer_path = "answer"
 
     with st.spinner("Supabase에서 파일 목록을 가져오는 중..."):

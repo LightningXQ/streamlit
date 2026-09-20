@@ -1,9 +1,8 @@
-import streamlit as st
-from st_supabase_connection import SupabaseConnection
-
 from datetime import datetime, time
 from zoneinfo import ZoneInfo
 
+import streamlit as st
+from st_supabase_connection import SupabaseConnection
 
 conn = st.connection("supabase", type=SupabaseConnection)
 supabase = conn.client
@@ -15,10 +14,10 @@ def submit(file, snum, sname):
     if not snum: st.warning("학번을 입력하세요!"); return
     if not sname: st.warning("이름을 입력하세요!"); return
 
-    current_time = datetime.now(ZoneInfo("Asia/Seoul")).time()
+    curr_time = datetime.now(ZoneInfo("Asia/Seoul")).time()
     cutoff_time = time(22, 0, 0)
 
-    if current_time >= cutoff_time:
+    if curr_time >= cutoff_time:
         st.warning("답안은 당일 오후 10시 이전에 제출해야 합니다.")
         return
 
@@ -27,12 +26,14 @@ def submit(file, snum, sname):
 def upload(file):
     with st.spinner("업로드 중..."):
         try:
-            # 메모리에 로드된 바이너리 데이터 읽기
             file_bytes = file.getvalue()
+
+            curr_date = datetime.now(ZoneInfo("Asia/Seoul"))
+            curr_mm_dd = curr_date.strftime("%m-%d")
 
             # 저장할 스토리지 경로 지정
             bucket_name = "pknu_climate_big_data_contest_2026"
-            storage_path = f"submissions/09_19/{file.name}"
+            storage_path = f"submissions/{curr_mm_dd}/{file.name}"
 
             # Supabase Storage 표준 업로드 실행
             response = supabase.storage.from_(bucket_name).upload(
@@ -44,7 +45,7 @@ def upload(file):
                 }
             )
 
-            st.success(f"🎉 업로드 성공! 경로: `{storage_path}`")
+            st.success(f"🎉 업로드 성공!")
 
         except Exception as e:
             st.error(f"❌ 업로드 실패: {str(e)}")
