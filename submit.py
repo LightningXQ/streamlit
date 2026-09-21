@@ -29,7 +29,7 @@ def submit(file, snum, sname):
         target_row = df[(df["student_number"] == snum) & (df["student_name"] == sname)]
         if target_row.empty:
             st.error(
-                f"❌ {snum} {sname} 학생은 참가자 명단에 없습니다."
+                f"{snum} {sname} 학생은 참가자 명단에 없습니다.  \n"
                 f"문제가 있다면 'ycj1219@pukyong.ac.kr'로 연락하시기 바랍니다."
             )
             return
@@ -40,16 +40,18 @@ def submit(file, snum, sname):
 
         if team_name is None:
             st.error(
-                f"❌ {snum} {sname} 학생은 참가자 명단에 있지만 팀이 없습니다."
+                f"{snum} {sname} 학생은 참가자 명단에 있지만 팀이 없습니다.  \n"
                 f"문제가 있다면 'ycj1219@pukyong.ac.kr'로 연락하시기 바랍니다."
             )
             return
         elif team_name != submit_team_name:
             st.error(
-                f"❌ {snum} {sname} 학생은 참가자 명단에 있지만 {submit_team_name} 팀이 아닙니다."
+                f"{snum} {sname} 학생은 참가자 명단에 있지만 {submit_team_name} 팀이 아닙니다.  \n"
                 f"문제가 있다면 'ycj1219@pukyong.ac.kr'로 연락하시기 바랍니다."
             )
             return
+        else:
+            st.success(f"✅ {submit_team_name} 팀의 {snum} {sname} 학생이 참가자 명단에 있습니다.")
 
     except Exception as e:
         st.error(f"❌ 자격 검증 실패: {str(e)}")
@@ -79,7 +81,7 @@ def upload(file):
                 }
             )
 
-            st.success(f"🎉 업로드 성공!")
+            st.success(f"🎉 업로드 성공! `{file.name}`")
 
         except Exception as e:
             st.error(f"❌ 업로드 실패: {str(e)}")

@@ -98,7 +98,7 @@ def download_submissions():
                 st.error(f"❌ 제출 파일 다운로드 중 에러 발생: {str(e)}")
                 return None
 
-        st.success("✅ 파일 다운로드가 완료되었습니다.")
+        st.success("✨ 파일 다운로드가 완료되었습니다.")
 
         return analyze_submissions(temp_dir)
 
