@@ -7,3 +7,4 @@ netcdf4
 pandas
 st-supabase-connection
 numpy
+streamlit-aggrid
