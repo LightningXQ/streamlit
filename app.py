@@ -108,7 +108,7 @@ with center:
         unsafe_allow_html=True
     )
     st.markdown(
-        "<h1 style='margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; line-height: 1.5; text-align:center;'>"
+        "<h1 style='margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; line-height: 1.5; text-align:center; word-break: keep-all;'>"
         "기상·기후 환경분야 빅데이터 경진대회"
         "</h1>",
         unsafe_allow_html=True
@@ -118,13 +118,13 @@ with center:
 
     if selected == "Leaderboard":
         st.markdown(
-            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.5;'>"
+            "<h2 style='margin-top: 0px; margin-bottom: 8px; padding-top: 0px; padding-bottom: 0px;'>"
             "Leaderboard"
             "</h2>",
             unsafe_allow_html=True
         )
         st.markdown(
-            '<p style="margin-top: 0px; color: gray; font-size: 14px;">'
+            '<p style="margin-top: 0px; margin-bottom: 4px; padding-top: 0px; padding-bottom: 0px; color: gray; font-size: 14px;">'
             '제출된 답안은 익일 0시에 반영됩니다.'
             '</p>',
             unsafe_allow_html=True
@@ -189,19 +189,19 @@ with center:
 
     if selected == "Submit":
         st.markdown(
-            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 1.0;'>"
+            "<h2 style='margin-top: 0px; margin-bottom: 16px; padding-top: 0px; padding-bottom: 0px; word-break: keep-all;'>"
             "Submit"
             "</h2>",
             unsafe_allow_html=True
         )
         st.markdown(
-            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "<h4 style='margin-top: 0px; margin-bottom: 8px; padding-top: 0px; padding-bottom: 0px; word-break: keep-all;'>"
             "대회의 참가자이신가요?"
             "</h4>",
             unsafe_allow_html=True
         )
         st.markdown(
-            "<h6 style='margin-top: 0px; margin-bottom: 0px; font-size: 18px;'>"
+            "<h6 style='margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; word-break: keep-all; font-size: 18px;'>"
             "답안을 작성한 NetCDF(.nc) 파일을 제출하세요."
             "</h6>",
             unsafe_allow_html=True
@@ -228,7 +228,7 @@ with center:
             submit(file, student_num, student_name)
 
         st.markdown(
-            "<p style='color: #909090; font-size: 14px; margin-bottom: 20px'>"
+            "<p style='color: #909090; font-size: 14px; margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px;'>"
             "답안은 하루에 한 번만 제출할 수 있으며, 오후 10시 이전에 제출된 답안만 당일의 답안으로 인정됩니다.<br>"
             "자세한 사항은 규칙을 참고하세요."
             "</p>",
@@ -236,13 +236,13 @@ with center:
         )
 
         st.markdown(
-            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "<h4 style='margin-top: 0px; margin-bottom: 8px; padding-top: 0px; padding-bottom: 0px; word-break: keep-all;'>"
             "대회의 관리자이신가요?"
             "</h4>",
             unsafe_allow_html=True
         )
         st.markdown(
-            "<h6 style='margin-top: 0px; margin-bottom: 0px; font-size: 18px;'>"
+            "<h6 style='margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; word-break: keep-all; font-size: 18px;'>"
             "관리자 비밀번호를 입력하고 제출된 답안을 검토하세요."
             "</h6>",
             unsafe_allow_html=True
@@ -257,7 +257,7 @@ with center:
                 review_confirm_dialog()
 
         st.markdown(
-            "<p style='color: #909090; font-size: 14px;'>"
+            "<p style='color: #909090; font-size: 14px; margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px;'>"
             "파일을 불러오거나 채점하는 도중 페이지를 새로고침하지 마세요."
             "</p>",
             unsafe_allow_html=True
@@ -270,13 +270,13 @@ with center:
 
     if selected == "Rules":
         st.markdown(
-            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.8;'>"
+            "<h2 style='margin-top: 0px; margin-bottom: 8px; padding-top: 0px; padding-bottom: 0px;'>"
             "Rules"
             "</h2>",
             unsafe_allow_html=True
         )
         st.markdown(
-            "<h6 style='line-height: 1.5;'>"
+            "<h6 style='margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px; font-size: 18px;'>"
             "대회 참가에 앞서 아래의 규칙을 반드시 확인해 주시기 바랍니다.<br>"
             "규칙을 숙지하지 않거나 준수하지 않아 발생하는 불이익에 대한 책임은 참가자에게 있습니다.<br>"
             "기타 문의 사항은 'ycj1219@pukyong.ac.kr'로 연락하시기 바랍니다."
@@ -284,7 +284,7 @@ with center:
             unsafe_allow_html=True
         )
         st.markdown(
-            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "<h4 style='margin-top: 0px; margin-bottom: 4px; padding-top: 0px; padding-bottom: 0px;'>"
             "참가 규칙"
             "</h4>",
             unsafe_allow_html=True
@@ -307,7 +307,7 @@ with center:
             unsafe_allow_html=True
         )
         st.markdown(
-            "<h4 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.6;'>"
+            "<h4 style='margin-top: 0px; margin-bottom: 4px; padding-top: 0px; padding-bottom: 0px;'>"
             "최종 파일 제출 및 검증"
             "</h4>",
             unsafe_allow_html=True
