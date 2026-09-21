@@ -14,10 +14,10 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-    div[data-testid="stHeaderActionElements"] {
+    [data-testid="stHeaderActionElements"] {
         display: none !important;
     }
-    div[data-testid="stViewerBadge"] {
+    [data-testid="stViewerBadge"] {
         display: none !important;
     }
     footer {
@@ -37,6 +37,18 @@ st.markdown(
     div[class*="st-key-progress_button"] button {
         margin-top: 28px !important;
         outline: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <style>
+    /* 헤더 링크 버튼 숨기기 */
+    .stApp a.header-anchor {
+        display: none !important;
     }
     </style>
     """,
