@@ -72,7 +72,6 @@ def review_confirm_dialog():
             st.rerun()
 
 LOGO_BASE64 = base64.b64encode(open("public/CERL_logo.png", "rb").read()).decode()
-ADMIN_PASSWORD = st.secrets["ADMIN_PASSWORD"]
 
 
 with st.sidebar:
