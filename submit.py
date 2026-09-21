@@ -3,7 +3,6 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import streamlit as st
-from sqlglot.expressions import Null
 from st_supabase_connection import SupabaseConnection
 
 conn = st.connection("supabase", type=SupabaseConnection)
