@@ -3,6 +3,7 @@ import base64
 import pandas as pd
 import streamlit as st
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
+from streamlit_javascript import st_javascript
 from st_supabase_connection import SupabaseConnection
 from streamlit_option_menu import option_menu
 
@@ -19,6 +20,10 @@ st.markdown(
     }
     [data-testid="stViewerBadge"] {
         display: none !important;
+    }
+    [data-testid="stMainBlockContainer"] {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
     }
     footer {
         visibility: hidden;
@@ -37,18 +42,6 @@ st.markdown(
     div[class*="st-key-progress_button"] button {
         margin-top: 28px !important;
         outline: none !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <style>
-    /* 헤더 링크 버튼 숨기기 */
-    .stApp a.header-anchor {
-        display: none !important;
     }
     </style>
     """,
@@ -97,7 +90,20 @@ with st.sidebar:
         }
     )
 
-left_margin, center, right_margin = st.columns([1, 5, 1])
+# 클라이언트의 화면 너비(px) 가져오기
+ui_width = st_javascript("window.innerWidth")
+
+# 화면 크기가 아직 로드되지 않았을 때의 기본값 설정
+if ui_width is None:
+    ui_width = 1000
+
+    # 미디어 쿼리 조건문 처리
+if ui_width < 768:
+    # 모바일 환경: 여백을 없애고 중앙을 넓게 쓰거나 1개의 컬럼만 사용
+    left_margin, center, right_margin = st.columns([1, 20, 1])
+else:
+    # 데스크톱 환경: 원래 요청한 비율
+    left_margin, center, right_margin = st.columns([1, 5, 1])
 
 with center:
     st.markdown(
@@ -152,8 +158,8 @@ with center:
             else:
                 df = pd.DataFrame(rows.data)
 
-                # df["best_score"] = pd.to_numeric(df["best_score"])
-                # df["recent_score"] = pd.to_numeric(df["recent_score"])
+                df["best_score"] = pd.to_numeric(df["best_score"]).round(3)
+                df["recent_score"] = pd.to_numeric(df["recent_score"]).round(3)
 
                 df["best_score_date"] = pd.to_datetime(df["best_score_date"])
                 df["recent_score_date"] = pd.to_datetime(df["recent_score_date"])
@@ -183,83 +189,48 @@ with center:
 
                 gb = GridOptionsBuilder.from_dataframe(df)
 
-                cell_style = JsCode("""                                                                                                                                                                           
-                function(params) {                                                                                                                                                                                
-                    if (params.node.rowIndex === 0 ||                                                                                                                                                             
-                        params.node.rowIndex === 1 ||                                                                                                                                                             
-                        params.node.rowIndex === 2) {                                                                                                                                                             
-                        return {                                                                                                                                                                                  
-                            'font-size': '28px',
-                            'font-weight': '500',
-                            'font-style': 'italic',
-                            'color': 'black', 
-                            'display': 'flex',                                                                                                                                                                    
-                            'alignItems': 'center',                                                                                                                                                               
-                            'justifyContent': 'center',                                                                                                                                                           
-                        };                                                                                                                                                                                        
-                    }                                                                                                                                                                                             
-                    return {            
-                        'font-size': '18px',                                                                                                                                                                          
-                        'display': 'flex',                                                                                                                                                                        
-                        'alignItems': 'center',                                                                                                                                                                   
-                        'justifyContent': 'center',                                                                                                                                                               
-                    };                                                                                                                                                                                            
-                }                                                                                                                                                                                                 
-                """)
-
-                gb.configure_default_column(
-                    resizable=False,
-                    sortable=False,
-                    filterable=False,
-                    cellStyle=cell_style,
-                )
-
-                gb.configure_column(
-                    "순위",
-                    sort="asc",
-                    width=90
-                )
-
-                gb.configure_column(
-                    "제출 횟수",
-                    width=120
-                )
-
                 header_renderer = JsCode("""                                                                                                                                                                      
                 class CustomHeader {                                                                                                                                                                              
                     init(params) {                                                                                                                                                                                
                         this.eGui = document.createElement('div');                                                                                                                                                
-                        this.eGui.style.display = 'flex';                                                                                                                                                         
+                        this.eGui.style.display = 'flex';   
+                        this.eGui.style.flexWrap = 'wrap';                                                                                                                                                      
                         this.eGui.style.alignItems = 'center';                                                                                                                                                    
-                        this.eGui.style.justifyContent = 'center';                                                                                                                                                
+                        this.eGui.style.justifyContent = 'center';  
+                        this.eGui.style.textAlign = 'center';
+                        this.eGui.style.whiteSpace = 'normal';
+                        this.eGui.style.wordBreak = 'keep-all';                                                                                                                                              
                         this.eGui.style.width = '100%';                                                                                                                                                           
-                        this.eGui.style.height = '100%';                                                                                                                                                          
-
-                        // 헤더 텍스트를 분리 (예: "최고 점수 (제출 일자)" → 점수명 + 괄호 부분)                                                                                                                  
+                        this.eGui.style.height = '100%'; 
+                        this.eGui.style.gap = '3px';                                                                                                                                                         
+                        
+                        const uiWidth = window.innerWidth;                                         
                         const headerName = params.displayName;                                                                                                                                                    
-                        const match = headerName.match(/^(.+?)\\s*(\\(.+\\))$/);                                                                                                                                  
-
+                        const match = headerName.match(/^(.+?)\\s*(\\(.+\\))$/);     
+                        
+                        let offset = 0;
+                        if (uiWidth < 768) { offset = offset - 2; }
+    
                         if (match) {                                                                                                                                                                              
-                            const title = match[1];  // "최고 점수"                                                                                                                                               
-                            const sub   = match[2];  // "(제출 일자)"                                                                                                                                             
+                            const title = match[1];
+                            const sub = match[2];                                                                                                                                             
                             this.eGui.innerHTML = `                                                                                                                                                               
-                                <span style="font-size:20px; font-weight:normal;">                                                                                                                                                                            
+                                <span style="font-size: ${20 + offset}px; font-weight:normal; line-height: 1.0;">
                                     ${title}                                                                                                                                                                      
                                 </span>                                                                                                                                                                       
-                                <span style="font-size:12px; color:gray; margin-left:4px;                                                                                                                         
-                                             font-weight:normal; position:relative; top:3px;">                                                                                                                    
+                                <span style="font-size: ${12 + offset}px; color: gray; font-weight:normal; line-height: 1.0;">
                                     ${sub}                                                                                                                                                                        
                                 </span>                                                                                                                                                                           
                             `;                                                                                                                                                                                    
                         } else {                                                                                                                                                                                  
                             this.eGui.innerHTML = `                                                                                                                                                               
-                                <span style="font-size:18px; font-weight:bold;">                                                                                                                                  
+                                <span style="font-size: ${20 + offset}px; font-weight: normal;">                                                                                                                                  
                                     ${headerName}                                                                                                                                                                 
                                 </span>                                                                                                                                                                           
                             `;                                                                                                                                                                                    
                         }                                                                                                                                                                                         
                     }                                                                                                                                                                                             
-
+    
                     getGui() {                                                                                                                                                                                    
                         return this.eGui;                                                                                                                                                                         
                     }                                                                                                                                                                                             
@@ -270,84 +241,88 @@ with center:
                 class CellRenderer {                                                                                                                                                                              
                     init(params) {                                                                                                                                                                                
                         this.eGui = document.createElement('div');                                                                                                                                                
-                        this.eGui.style.display = 'flex';                                                                                                                                                         
+                        this.eGui.style.display = 'flex';      
+                        this.eGui.style.flexWrap = 'wrap';                                                                                                                                               
                         this.eGui.style.alignItems = 'center';                                                                                                                                                    
-                        this.eGui.style.justifyContent = 'center';                                                                                                                                                
-                        this.eGui.style.height = '100%';                                                                                                                                                          
-
-                        const match = params.value                                                                                                                                                                
-                            ? params.value.match(/^(.+?)\\s*(\\(.+\\))$/)                                                                                                                                         
-                            : null;                                                                                                                                                                               
-
+                        this.eGui.style.justifyContent = 'center';
+                        this.eGui.style.textAlign = 'center';
+                        this.eGui.style.whiteSpace = 'normal';
+                        this.eGui.style.wordBreak = 'keep-all';
+                        this.eGui.style.width = '100%';         
+                        this.eGui.style.height = '100%';
+                        this.eGui.style.gap = '4px';                                                                                                                         
+                        
+                        const rowIndex = params.node.rowIndex;
+                        
+                        const uiWidth = window.innerWidth;
+                        const cellValue = params.value;
+                        let match = null;
+                        if (typeof cellValue === "string") {
+                            match = cellValue.match(/^(.+?)\\s*(\\(.+\\))$/);
+                        }
+                        
+                        let offset = 0;
+                        if (uiWidth < 400) { offset = offset - 2; }                                                                                                                                       
+    
                         if (match) {                                                                                                                                                                              
                             const score = match[1];                                                                                                                                                               
-                            const date  = match[2];                                                                                                                                                               
-                            const rowIndex = params.node.rowIndex;  // ⭕ rowIndex 가져오기                                                                                                                       
-                                                                                                                                                                                                                  
-                            // rowIndex에 따라 margin 값 결정                                                                                                                                                     
-                            let marginTop;                                                                                                                                                                        
-                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {                                                                                                                                                                 
-                                marginTop = '12px';   // 1위: 8px 아래                                                                                                                                             
-                            } else {                                                                                                                                                                              
-                                marginTop = '2px';   // 나머지: 기본값                                                                                                                                            
-                            }                                                                                                                                                               
-                            this.eGui.innerHTML = `                                                                                                                                                               
-                                <span>                                                                                                                                                                            
-                                    ${score}                                                                                                                                                                      
-                                </span>                                                                                                                                                                           
-                                <span style="font-size:14px; color:gray; margin-left:6px; font-weight:normal; font-style:normal; margin-top: ${marginTop};">                                                                                
-                                    ${date}                                                                                                                                                                       
-                                </span>                                                                                                                                                                           
-                            `;                                                                                                                                                                                    
+                            const date = match[2];                                                                                                                    
+                            
+                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
+                                this.eGui.innerHTML = `                                                                                                                                                               
+                                    <span style="font-size: ${28 + 2 * offset}px; font-weight: 500; line-height: 1.0;">                                                                                                                                                                             
+                                        ${score}                                                                                                                                                                      
+                                    </span>                                                                                                                                                                           
+                                    <span style="font-size: ${14 + offset}px; color: gray; line-height: 1.0;">                                                                                
+                                        ${date}                                                                                                                                                                       
+                                    </span>                                                                                                                                                                           
+                                `;                                                                                                
+                            } else {
+                                this.eGui.innerHTML = `                                                                                                                                                               
+                                    <span style="font-size: 18px; line-height: 1.0;">                                                                                                                                        
+                                        ${score}                                                                                                                                                                      
+                                    </span>                                                                                                                                                                           
+                                    <span style="font-size: 12px; color: gray; line-height: 1.0;">                                                                                
+                                        ${date}                                                                                                                                                                       
+                                    </span>                                                                                                                                                                           
+                                `;                                                                                                                                                             
+                            }                                                                                                                                                                                                                  
                         } else {                                                                                                                                                                                  
-                            this.eGui.innerText = params.value || '';                                                                                                                                             
+                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {    
+                                this.eGui.innerHTML = `                                                                                                                                                               
+                                    <span style="font-size: 28px; font-weight: 500; font-style: italic;">                                                                                                                                     
+                                        ${cellValue}                                                                                                                                                                    
+                                    </span>                                                                                                                                                                           
+                                `;                                                                                                                                            
+                            } else {
+                                this.eGui.innerHTML = `                                                                                                                                                               
+                                    <span style="font-size: 18px;">                                                                                                                                                                            
+                                        ${cellValue}                                                                                                                                                                       
+                                    </span>                                                                                                                                                                           
+                                `;                                                                                                                                                             
+                            }                                                                                                                                           
                         }                                                                                                                                                                                         
                     }                                                                                                                                                                                             
-
+    
                     getGui() {                                                                                                                                                                                    
                         return this.eGui;                                                                                                                                                                         
                     }                                                                                                                                                                                             
                 }                                                                                                                                                                                                 
                 """)
 
-                # 특정 컬럼에 headerComponent 적용
-                gb.configure_column(
-                    "최고 점수 (제출 일자)",
-                    cellRenderer=cell_renderer,
-                    headerComponent=header_renderer,
-                    # ⭕ 헤더 커스텀 렌더러 적용
-                )
-                gb.configure_column(
-                    "최근 점수 (제출 일자)",
-                    cellRenderer=cell_renderer,
-                    headerComponent=header_renderer,
-                )
-
-                custom_css = {
-                    ".ag-header-cell-label": {
-                        "font-size": "20px !important",
-                        "font-weight": "normal !important",
-                        "justify-content": "center !important",
-                        "text-align": "center !important",
-                    },
-                    ".ag-header-cell-menu-button, .ag-header-icon": {
-                        "display": "none !important",
-                    }
-                }
-
                 row_style = JsCode("""                                                                                                                                                                     
                 function(params) {                                                                                                                                                                                
                     if (params.node.rowIndex === 0) { // 1위 (첫 번째 행)                                                                                                                                         
                         return {                                                                                                                                                                                  
-                            'background': 'linear-gradient(90deg, #FFD700 -30%, #FFFFFF 130%)',                                                                                                                                                                
+                            'background': 'linear-gradient(90deg, #FFD700 -50%, #FFFFFF 130%)',                                                                                                                                                                
                         };                                                                                                                                                                                        
                     } else if (params.node.rowIndex === 1) { // 2위 (두 번째 행)                                                                                                                                  
                         return {                                                                                                                                                                                  
-                            'background': 'linear-gradient(90deg, #C0C0C0 -30%, #FFFFFF 130%)',                                                                                                                    
+                            'background': 'linear-gradient(90deg, #C0C0C0 -50%, #FFFFFF 130%)',                                                                                                                    
                         };                                                                                                                                                                                        
                     } else if (params.node.rowIndex === 2) {
                         return {
-                            'background': 'linear-gradient(90deg, #CD7F32 -30%, #FFFFFF 130%)',
+                            'background': 'linear-gradient(90deg, #CD7F32 -50%, #FFFFFF 130%)',
                         };
                     }                                                                                                                                                                                            
                     return null;                                                                                                                                                                                  
@@ -363,14 +338,61 @@ with center:
                 }                                                                                                                                                                                                 
                 """)
 
+                custom_css = {
+                    ".ag-header-cell-menu-button, .ag-header-icon": {
+                        "display": "none !important",
+                    },
+                    ".ag-row .ag-cell": {
+                        "display": "flex !important",
+                        "align-items": "center !important",
+                        "justify-content": "center !important",
+                    }
+
+                }
+
+                external_vars = {
+                    "ui_width": ui_width,
+                }
+
+                gb.configure_default_column(
+                    resizable=False,
+                    sortable=False,
+                    filterable=False,
+                    editable=False,
+                    groupable=False,
+                    headerComponent=header_renderer,
+                    cellRenderer=cell_renderer,
+                )
+
+                gb.configure_column(
+                    "순위",
+                    sort="asc",
+                    width=90
+                )
+
+                gb.configure_column(
+                    "제출 횟수",
+                    width=120
+                )
+
                 gb.configure_grid_options(
                     getRowStyle=row_style,
                     getRowHeight=row_height,
                     onGridReady=JsCode("function(params) { params.api.sizeColumnsToFit(); }"),
                     onGridSizeChanged=JsCode("function(params) { params.api.sizeColumnsToFit(); }"),
+                    wrapText = True,  # ⭕ 셀 내부 텍스트 줄바꿈 활성화
+                    autoHeight = True,  # ⭕ 텍스트 길이에 맞춰 셀 높이 자동 조절 (필수)
                 )
 
                 grid_options = gb.build()
+                grid_options["context"] = external_vars
+                grid_options["headerHeight"] = None  # ⭕ 고정 헤더 높이 해제 (자동 조절 활성화)
+                grid_options["wrapHeaderText"] = True  # ⭕ 헤더 텍스트 줄바꿈 활성화
+                grid_options["autoHeaderHeight"] = True  # ⭕ 헤더 높이 자동 조절 활성화
+                grid_options["defaultColDef"].update({
+                    "wrapText": True,
+                    "autoHeight": True
+                })
 
                 AgGrid(
                     df,
@@ -403,11 +425,6 @@ with center:
             "</h6>",
             unsafe_allow_html=True
         )
-
-        is_file_not_exist = None
-        is_filename_invalid = None
-        is_num_not_exist = None
-        is_name_not_exist = None
 
         file = st.file_uploader("NetCDF 파일을 선택하세요.", type=["nc"])
 
@@ -448,7 +465,7 @@ with center:
         password_input, review_button = st.columns([6, 1])
 
         with password_input:
-            password = st.text_input("관리자 비밀번호를 입력하세요.")
+            password = st.text_input("관리자 비밀번호를 입력하세요.", type="password")
         with review_button:
             if st.button("검토하기", key="progress_button-2", use_container_width=True):
                 review_confirm_dialog()
@@ -477,7 +494,7 @@ with center:
             "대회 참가에 앞서 아래의 규칙을 반드시 확인해 주시기 바랍니다.<br>"
             "규칙을 숙지하지 않거나 준수하지 않아 발생하는 불이익에 대한 책임은 참가자에게 있습니다.<br>"
             "기타 문의 사항은 'ycj1219@pukyong.ac.kr'로 연락하시기 바랍니다."
-            "</h2>",
+            "</h6>",
             unsafe_allow_html=True
         )
         st.markdown(

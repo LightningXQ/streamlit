@@ -8,3 +8,4 @@ pandas
 st-supabase-connection
 numpy
 streamlit-aggrid
+streamlit-javascript
