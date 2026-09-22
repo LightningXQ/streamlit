@@ -158,8 +158,8 @@ with center:
             else:
                 df = pd.DataFrame(rows.data)
 
-                df["best_score"] = pd.to_numeric(df["best_score"]).round(3)
-                df["recent_score"] = pd.to_numeric(df["recent_score"]).round(3)
+                df["best_score"] = pd.to_numeric(df["best_score"])
+                df["recent_score"] = pd.to_numeric(df["recent_score"])
 
                 df["best_score_date"] = pd.to_datetime(df["best_score_date"])
                 df["recent_score_date"] = pd.to_datetime(df["recent_score_date"])
@@ -262,11 +262,17 @@ with center:
                         }
                         
                         let offset = 0;
-                        if (uiWidth < 400) { offset = offset - 2; }                                                                                                                                       
+                        if (uiWidth < 768) { 
+                            offset = offset - 2; 
+                        }                                                                                                                                       
     
                         if (match) {                                                                                                                                                                              
-                            const score = match[1];                                                                                                                                                               
-                            const date = match[2];                                                                                                                    
+                            let score = match[1];                                                                                                                                                               
+                            const date = match[2]; 
+                            if (offset < 0) { 
+                                score = Number(score);
+                                score = score.toFixed(3); 
+                            }                                                                                                                   
                             
                             if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
                                 this.eGui.innerHTML = `                                                                                                                                                               
