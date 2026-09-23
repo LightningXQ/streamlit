@@ -85,7 +85,7 @@ with st.sidebar:
         default_index=0,
         styles={
             "container": {"padding": "5px!", "background-color": "#fafafa"},
-            "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
+            "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "--hover-color": "#eee"},
             "nav-link-selected": {"background-color": "#02ab21"},
         }
     )
@@ -189,159 +189,159 @@ with center:
 
                 gb = GridOptionsBuilder.from_dataframe(df)
 
-                header_renderer = JsCode("""                                                                                                                                                                      
-                class CustomHeader {                                                                                                                                                                              
-                    init(params) {                                                                                                                                                                                
-                        this.eGui = document.createElement('div');                                                                                                                                                
-                        this.eGui.style.display = 'flex';   
-                        this.eGui.style.flexWrap = 'wrap';                                                                                                                                                      
-                        this.eGui.style.alignItems = 'center';                                                                                                                                                    
-                        this.eGui.style.justifyContent = 'center';  
-                        this.eGui.style.textAlign = 'center';
-                        this.eGui.style.whiteSpace = 'normal';
-                        this.eGui.style.wordBreak = 'keep-all';                                                                                                                                              
-                        this.eGui.style.width = '100%';                                                                                                                                                           
-                        this.eGui.style.height = '100%'; 
-                        this.eGui.style.gap = '3px';                                                                                                                                                         
-                        
-                        const uiWidth = window.innerWidth;                                         
-                        const headerName = params.displayName;                                                                                                                                                    
-                        const match = headerName.match(/^(.+?)\\s*(\\(.+\\))$/);     
-                        
-                        let offset = 0;
-                        if (uiWidth < 768) { offset = offset - 2; }
-    
-                        if (match) {                                                                                                                                                                              
-                            const title = match[1];
-                            const sub = match[2];                                                                                                                                             
-                            this.eGui.innerHTML = `                                                                                                                                                               
-                                <span style="font-size: ${20 + offset}px; font-weight:normal; line-height: 1.0;">
-                                    ${title}                                                                                                                                                                      
-                                </span>                                                                                                                                                                       
-                                <span style="font-size: ${12 + offset}px; color: gray; font-weight:normal; line-height: 1.0;">
-                                    ${sub}                                                                                                                                                                        
-                                </span>                                                                                                                                                                           
-                            `;                                                                                                                                                                                    
-                        } else {                                                                                                                                                                                  
-                            this.eGui.innerHTML = `                                                                                                                                                               
-                                <span style="font-size: ${20 + offset}px; font-weight: normal;">                                                                                                                                  
-                                    ${headerName}                                                                                                                                                                 
-                                </span>                                                                                                                                                                           
-                            `;                                                                                                                                                                                    
-                        }                                                                                                                                                                                         
-                    }                                                                                                                                                                                             
-    
-                    getGui() {                                                                                                                                                                                    
-                        return this.eGui;                                                                                                                                                                         
-                    }                                                                                                                                                                                             
-                }                                                                                                                                                                                                 
-                """)
-
-                cell_renderer = JsCode("""                                                                                                                                                                        
-                class CellRenderer {                                                                                                                                                                              
-                    init(params) {                                                                                                                                                                                
-                        this.eGui = document.createElement('div');                                                                                                                                                
-                        this.eGui.style.display = 'flex';      
-                        this.eGui.style.flexWrap = 'wrap';                                                                                                                                               
-                        this.eGui.style.alignItems = 'center';                                                                                                                                                    
+                header_renderer = JsCode("""
+                class CustomHeader {
+                    init(params) {
+                        this.eGui = document.createElement('div');
+                        this.eGui.style.display = 'flex';
+                        this.eGui.style.flexWrap = 'wrap';
+                        this.eGui.style.alignItems = 'center';
                         this.eGui.style.justifyContent = 'center';
                         this.eGui.style.textAlign = 'center';
                         this.eGui.style.whiteSpace = 'normal';
                         this.eGui.style.wordBreak = 'keep-all';
-                        this.eGui.style.width = '100%';         
+                        this.eGui.style.width = '100%';
                         this.eGui.style.height = '100%';
-                        this.eGui.style.gap = '4px';                                                                                                                         
-                        
+                        this.eGui.style.gap = '3px';
+
+                        const uiWidth = window.innerWidth;
+                        const headerName = params.displayName;
+                        const match = headerName.match(/^(.+?)\\s*(\\(.+\\))$/);
+
+                        let offset = 0;
+                        if (uiWidth < 768) { offset = offset - 2; }
+
+                        if (match) {
+                            const title = match[1];
+                            const sub = match[2];
+                            this.eGui.innerHTML = `
+                                <span style="font-size: ${20 + offset}px; font-weight:normal; line-height: 1.0;">
+                                    ${title}
+                                </span>
+                                <span style="font-size: ${12 + offset}px; color: gray; font-weight:normal; line-height: 1.0;">
+                                    ${sub}
+                                </span>
+                            `;
+                        } else {
+                            this.eGui.innerHTML = `
+                                <span style="font-size: ${20 + offset}px; font-weight: normal;">
+                                    ${headerName}
+                                </span>
+                            `;
+                        }
+                    }
+
+                    getGui() {
+                        return this.eGui;
+                    }
+                }
+                """)
+
+                cell_renderer = JsCode("""
+                class CellRenderer {
+                    init(params) {
+                        this.eGui = document.createElement('div');
+                        this.eGui.style.display = 'flex';
+                        this.eGui.style.flexWrap = 'wrap';
+                        this.eGui.style.alignItems = 'center';
+                        this.eGui.style.justifyContent = 'center';
+                        this.eGui.style.textAlign = 'center';
+                        this.eGui.style.whiteSpace = 'normal';
+                        this.eGui.style.wordBreak = 'keep-all';
+                        this.eGui.style.width = '100%';
+                        this.eGui.style.height = '100%';
+                        this.eGui.style.gap = '4px';
+
                         const rowIndex = params.node.rowIndex;
-                        
+
                         const uiWidth = window.innerWidth;
                         const cellValue = params.value;
                         let match = null;
                         if (typeof cellValue === "string") {
                             match = cellValue.match(/^(.+?)\\s*(\\(.+\\))$/);
                         }
-                        
+
                         let offset = 0;
-                        if (uiWidth < 768) { 
-                            offset = offset - 2; 
-                        }                                                                                                                                       
-    
-                        if (match) {                                                                                                                                                                              
-                            let score = match[1];                                                                                                                                                               
-                            const date = match[2]; 
-                            if (offset < 0) { 
+                        if (uiWidth < 768) {
+                            offset = offset - 2;
+                        }
+
+                        if (match) {
+                            let score = match[1];
+                            const date = match[2];
+                            if (offset < 0) {
                                 score = Number(score);
-                                score = score.toFixed(3); 
-                            }                                                                                                                   
-                            
+                                score = score.toFixed(3);
+                            }
+
                             if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
-                                this.eGui.innerHTML = `                                                                                                                                                               
-                                    <span style="font-size: ${28 + 2 * offset}px; font-weight: 500; line-height: 1.0;">                                                                                                                                                                             
-                                        ${score}                                                                                                                                                                      
-                                    </span>                                                                                                                                                                           
-                                    <span style="font-size: ${14 + offset}px; color: gray; line-height: 1.0;">                                                                                
-                                        ${date}                                                                                                                                                                       
-                                    </span>                                                                                                                                                                           
-                                `;                                                                                                
+                                this.eGui.innerHTML = `
+                                    <span style="font-size: ${28 + 2 * offset}px; font-weight: 500; line-height: 1.0;">
+                                        ${score}
+                                    </span>
+                                    <span style="font-size: ${14 + offset}px; color: gray; line-height: 1.0;">
+                                        ${date}
+                                    </span>
+                                `;
                             } else {
-                                this.eGui.innerHTML = `                                                                                                                                                               
-                                    <span style="font-size: 18px; line-height: 1.0;">                                                                                                                                        
-                                        ${score}                                                                                                                                                                      
-                                    </span>                                                                                                                                                                           
-                                    <span style="font-size: 12px; color: gray; line-height: 1.0;">                                                                                
-                                        ${date}                                                                                                                                                                       
-                                    </span>                                                                                                                                                                           
-                                `;                                                                                                                                                             
-                            }                                                                                                                                                                                                                  
-                        } else {                                                                                                                                                                                  
-                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {    
-                                this.eGui.innerHTML = `                                                                                                                                                               
-                                    <span style="font-size: 28px; font-weight: 500; font-style: italic;">                                                                                                                                     
-                                        ${cellValue}                                                                                                                                                                    
-                                    </span>                                                                                                                                                                           
-                                `;                                                                                                                                            
+                                this.eGui.innerHTML = `
+                                    <span style="font-size: 18px; line-height: 1.0;">
+                                        ${score}
+                                    </span>
+                                    <span style="font-size: 12px; color: gray; line-height: 1.0;">
+                                        ${date}
+                                    </span>
+                                `;
+                            }
+                        } else {
+                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
+                                this.eGui.innerHTML = `
+                                    <span style="font-size: 28px; font-weight: 500; font-style: italic;">
+                                        ${cellValue}
+                                    </span>
+                                `;
                             } else {
-                                this.eGui.innerHTML = `                                                                                                                                                               
-                                    <span style="font-size: 18px;">                                                                                                                                                                            
-                                        ${cellValue}                                                                                                                                                                       
-                                    </span>                                                                                                                                                                           
-                                `;                                                                                                                                                             
-                            }                                                                                                                                           
-                        }                                                                                                                                                                                         
-                    }                                                                                                                                                                                             
-    
-                    getGui() {                                                                                                                                                                                    
-                        return this.eGui;                                                                                                                                                                         
-                    }                                                                                                                                                                                             
-                }                                                                                                                                                                                                 
+                                this.eGui.innerHTML = `
+                                    <span style="font-size: 18px;">
+                                        ${cellValue}
+                                    </span>
+                                `;
+                            }
+                        }
+                    }
+
+                    getGui() {
+                        return this.eGui;
+                    }
+                }
                 """)
 
-                row_style = JsCode("""                                                                                                                                                                     
-                function(params) {                                                                                                                                                                                
-                    if (params.node.rowIndex === 0) { // 1위 (첫 번째 행)                                                                                                                                         
-                        return {                                                                                                                                                                                  
-                            'background': 'linear-gradient(90deg, #FFD700 -50%, #FFFFFF 130%)',                                                                                                                                                                
-                        };                                                                                                                                                                                        
-                    } else if (params.node.rowIndex === 1) { // 2위 (두 번째 행)                                                                                                                                  
-                        return {                                                                                                                                                                                  
-                            'background': 'linear-gradient(90deg, #C0C0C0 -50%, #FFFFFF 130%)',                                                                                                                    
-                        };                                                                                                                                                                                        
+                row_style = JsCode("""
+                function(params) {
+                    if (params.node.rowIndex === 0) { // 1위 (첫 번째 행)
+                        return {
+                            'background': 'linear-gradient(90deg, #FFD700 -50%, #FFFFFF 130%)',
+                        };
+                    } else if (params.node.rowIndex === 1) { // 2위 (두 번째 행)
+                        return {
+                            'background': 'linear-gradient(90deg, #C0C0C0 -50%, #FFFFFF 130%)',
+                        };
                     } else if (params.node.rowIndex === 2) {
                         return {
                             'background': 'linear-gradient(90deg, #CD7F32 -50%, #FFFFFF 130%)',
                         };
-                    }                                                                                                                                                                                            
-                    return null;                                                                                                                                                                                  
-                }                                                                                                                                                                                                 
+                    }
+                    return null;
+                }
                 """)
 
-                row_height = JsCode("""                                                                                                                                                                    
-                function(params) {                                                                                                                                                                                
-                    if (params.node.rowIndex === 0 || params.node.rowIndex === 1 || params.node.rowIndex === 2) {                                                                                                                                                             
-                        return 60;                                                                                                                                                
-                    }                                                                                                                                                                                             
-                    return 40;                                                                                                                                             
-                }                                                                                                                                                                                                 
+                row_height = JsCode("""
+                function(params) {
+                    if (params.node.rowIndex === 0 || params.node.rowIndex === 1 || params.node.rowIndex === 2) {
+                        return 60;
+                    }
+                    return 40;
+                }
                 """)
 
                 custom_css = {
@@ -373,8 +373,8 @@ with center:
                     getRowHeight=row_height,
                     onGridReady=JsCode("function(params) { params.api.sizeColumnsToFit(); }"),
                     onGridSizeChanged=JsCode("function(params) { params.api.sizeColumnsToFit(); }"),
-                    wrapText = True,  # ⭕ 셀 내부 텍스트 줄바꿈 활성화
-                    autoHeight = True,  # ⭕ 텍스트 길이에 맞춰 셀 높이 자동 조절 (필수)
+                    wrapText=True,  # ⭕ 셀 내부 텍스트 줄바꿈 활성화
+                    autoHeight=True,  # ⭕ 텍스트 길이에 맞춰 셀 높이 자동 조절 (필수)
                 )
 
                 grid_options = gb.build()
@@ -529,7 +529,7 @@ with center:
             - 검증 과정에서 필요한 경우 주최측은 예비 수상자에게 추가적인 코드, 데이터 또는 설명 자료의 제출을 요구할 수 있습니다.
             - 규칙 위반 또는 결과 재현 실패 중 하나 이상의 결격 사유가 확인되는 경우 해당 팀은 실격 처리되며 예비 수상자 자격이 취소됩니다.
             - 실격으로 인해 수상 인원에 결원이 발생하는 경우, 차순위 팀을 새로운 예비 수상자로 선정하여 동일한 검증 절차를 진행합니다.
-            - 모든 검증 절차가 완료된 후 12월 12일 최종 수상자를 발표합니다.            
+            - 모든 검증 절차가 완료된 후 12월 12일 최종 수상자를 발표합니다.
             """
         )
 

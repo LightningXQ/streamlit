@@ -1,5 +1,3 @@
-# TODO: Database와 Bucket에서 RLS 정책 수정하기(임시로 secret key로 접속함)
-
 import os
 import tempfile
 from datetime import datetime

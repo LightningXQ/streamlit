@@ -1,4 +1,5 @@
 .streamlit/secrets.toml
+.aiignore
 downloaded_files
 .venv
 __pycache__
