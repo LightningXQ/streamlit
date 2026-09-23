@@ -276,7 +276,7 @@ with center:
 
                             if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
                                 this.eGui.innerHTML = `
-                                    <span style="font-size: ${28 + 2 * offset}px; font-weight: 500; line-height: 1.0;">
+                                    <span style="font-size: ${28 + 2 * offset}px; font-weight: 500; font-style: italic; line-height: 1.0;">
                                         ${score}
                                     </span>
                                     <span style="font-size: ${14 + offset}px; color: gray; line-height: 1.0;">
@@ -373,14 +373,14 @@ with center:
                     getRowHeight=row_height,
                     onGridReady=JsCode("function(params) { params.api.sizeColumnsToFit(); }"),
                     onGridSizeChanged=JsCode("function(params) { params.api.sizeColumnsToFit(); }"),
-                    wrapText=True,  # ⭕ 셀 내부 텍스트 줄바꿈 활성화
-                    autoHeight=True,  # ⭕ 텍스트 길이에 맞춰 셀 높이 자동 조절 (필수)
+                    wrapText=True,
+                    autoHeight=True,
                 )
 
                 grid_options = gb.build()
-                grid_options["headerHeight"] = None  # ⭕ 고정 헤더 높이 해제 (자동 조절 활성화)
-                grid_options["wrapHeaderText"] = True  # ⭕ 헤더 텍스트 줄바꿈 활성화
-                grid_options["autoHeaderHeight"] = True  # ⭕ 헤더 높이 자동 조절 활성화
+                grid_options["headerHeight"] = None
+                grid_options["wrapHeaderText"] = True
+                grid_options["autoHeaderHeight"] = True
                 grid_options["defaultColDef"].update({
                     "wrapText": True,
                     "autoHeight": True
