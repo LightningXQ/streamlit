@@ -353,11 +353,6 @@ with center:
                         "align-items": "center !important",
                         "justify-content": "center !important",
                     }
-
-                }
-
-                external_vars = {
-                    "ui_width": ui_width,
                 }
 
                 gb.configure_default_column(
@@ -370,16 +365,8 @@ with center:
                     cellRenderer=cell_renderer,
                 )
 
-                gb.configure_column(
-                    "순위",
-                    sort="asc",
-                    width=90
-                )
-
-                gb.configure_column(
-                    "제출 횟수",
-                    width=120
-                )
+                gb.configure_column("순위", sort="asc", width=90)
+                gb.configure_column("제출 횟수", width=120)
 
                 gb.configure_grid_options(
                     getRowStyle=row_style,
@@ -391,7 +378,6 @@ with center:
                 )
 
                 grid_options = gb.build()
-                grid_options["context"] = external_vars
                 grid_options["headerHeight"] = None  # ⭕ 고정 헤더 높이 해제 (자동 조절 활성화)
                 grid_options["wrapHeaderText"] = True  # ⭕ 헤더 텍스트 줄바꿈 활성화
                 grid_options["autoHeaderHeight"] = True  # ⭕ 헤더 높이 자동 조절 활성화
