@@ -2,19 +2,33 @@ import base64
 
 import pandas as pd
 import streamlit as st
+from PIL import Image
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
-from streamlit_javascript import st_javascript
 from st_supabase_connection import SupabaseConnection
+from streamlit_javascript import st_javascript
 from streamlit_option_menu import option_menu
 
 from review import review
 from submit import submit
 
-st.set_page_config(layout="wide")
+LOGO = Image.open("public/CERL_logo.png")
+LOGO_BASE64 = base64.b64encode(open("public/CERL_logo.png", "rb").read()).decode()
+
+st.set_page_config(
+    page_title="경진대회 | CERL",
+    page_icon=LOGO,
+    layout="wide"
+)
 
 st.markdown(
     """
     <style>
+    a[class^="_container_"] {
+        display: none !important;
+    }
+    div[class^="_profileContainer_"] {
+        display: none !important;
+    }
     [data-testid="stHeaderActionElements"] {
         display: none !important;
     }
@@ -74,8 +88,6 @@ def review_confirm_dialog():
         if st.button("취소", use_container_width=True, key="cancel_button-2"):
             st.session_state.review_confirmed = False
             st.rerun()
-
-LOGO_BASE64 = base64.b64encode(open("public/CERL_logo.png", "rb").read()).decode()
 
 
 with st.sidebar:
@@ -527,7 +539,8 @@ with center:
             - 규칙 위반 또는 결과 재현 실패 중 하나 이상의 결격 사유가 확인되는 경우 해당 팀은 실격 처리되며 예비 수상자 자격이 취소됩니다.
             - 실격으로 인해 수상 인원에 결원이 발생하는 경우, 차순위 팀을 새로운 예비 수상자로 선정하여 동일한 검증 절차를 진행합니다.
             - 모든 검증 절차가 완료된 후 12월 12일 최종 수상자를 발표합니다.
-            """
+            """,
+            unsafe_allow_html=True
         )
 
     if selected == "Info":
