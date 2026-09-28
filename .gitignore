@@ -1,7 +1,6 @@
 .streamlit/secrets.toml
 .aiignore
-downloaded_files
+workspace
 .venv
 __pycache__
 .idea
-*.nc

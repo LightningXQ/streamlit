@@ -97,12 +97,9 @@ ui_width = st_javascript("window.innerWidth")
 if ui_width is None:
     ui_width = 1000
 
-    # 미디어 쿼리 조건문 처리
 if ui_width < 768:
-    # 모바일 환경: 여백을 없애고 중앙을 넓게 쓰거나 1개의 컬럼만 사용
     left_margin, center, right_margin = st.columns([1, 20, 1])
 else:
-    # 데스크톱 환경: 원래 요청한 비율
     left_margin, center, right_margin = st.columns([1, 5, 1])
 
 with center:
