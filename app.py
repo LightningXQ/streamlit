@@ -8,9 +8,6 @@ from st_supabase_connection import SupabaseConnection
 from streamlit_javascript import st_javascript
 from streamlit_option_menu import option_menu
 
-from review import review
-from submit import submit
-
 LOGO = Image.open("public/CERL_logo.png")
 LOGO_BASE64 = base64.b64encode(open("public/CERL_logo.png", "rb").read()).decode()
 
@@ -19,6 +16,9 @@ st.set_page_config(
     page_icon=LOGO,
     layout="wide"
 )
+
+from review import review
+from submit import submit
 
 st.markdown(
     """
@@ -91,7 +91,7 @@ with st.sidebar:
         default_index=0,
         styles={
             "container": {"padding": "5px!"},
-            "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "--hover-color": "#eee"},
+            "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px"},
             "nav-link-selected": {"font-weight": "normal", "background-color": "#02ab21"},
         }
     )
@@ -321,11 +321,11 @@ with center:
 
                 row_style = JsCode("""
                 function(params) {
-                    if (params.node.rowIndex === 0) { // 1위 (첫 번째 행)
+                    if (params.node.rowIndex === 0) {
                         return {
                             'background': 'linear-gradient(90deg, #FFD700 -50%, #FFFFFF 130%)',
                         };
-                    } else if (params.node.rowIndex === 1) { // 2위 (두 번째 행)
+                    } else if (params.node.rowIndex === 1) {
                         return {
                             'background': 'linear-gradient(90deg, #C0C0C0 -50%, #FFFFFF 130%)',
                         };
@@ -504,8 +504,8 @@ with center:
             - 제출 파일 이름은 반드시 "pred_Y_팀명.nc" 형식으로 지정해야 합니다. 파일 형식이 일치하지 않는 경우 평가를 진행하지 않습니다.
             - 제공된 "pred_Y_팀명.nc" 파일은 제출용 템플릿입니다. 파일에서 NaN이 아닌 지점의 초기값 0을 모델의 예측값으로 변경하여 제출해야 합니다.
             - 기존 NaN 지점은 그대로 유지해야 하며, 변수명, 차원, 위도·경도·시간 좌표 및 배열 구조를 변경해서는 안 됩니다. 형식이 일치하지 않는 경우 평가를 진행하지 않습니다.
-            - 제공된 "train_Y.nc"의 Vc,max,25는 모델의 학습 "목표"만 사용해야 합니다. Vc,max,25를 입력 변수 혹은 튜닝 등 후처리에 사용하는 것을 금지합니다.
-            - Vc,max,25로부터 직접 계산된 파생 변수를 입력 자료로 사용하는 것을 금지합니다. 또한 외부의 Vc,max,25 데이터를 모델 학습에 사용할 수 없습니다.
+            - 제공된 "train_Y.nc"의 Vcmax₂₅는 모델의 학습 "목표"만 사용해야 합니다. Vcmax₂₅를 입력 변수 혹은 튜닝 등 후처리에 사용하는 것을 금지합니다.
+            - Vcmax₂₅로부터 직접 계산된 파생 변수를 입력 자료로 사용하는 것을 금지합니다. 또한 외부의 Vcmax₂₅ 데이터를 모델 학습에 사용할 수 없습니다.
             - 참가자들은 대회에서 제공하는 입력 자료 이외에 대기와 관련한 외부 데이터를 추가적으로 사용할 수 있습니다.
             - Land cover, LAI, GPP 등 지면·식생·생태계와 관련된 변수는 사용할 수 없습니다.
             - 특정 외부 데이터의 사용 가능 여부가 불분명한 경우 반드시 사전에 이메일로 문의해 주시기 바랍니다.
@@ -540,24 +540,38 @@ with center:
 
     if selected == "Info":
         st.markdown(
-            "<h2 style='margin-top: 0px; margin-bottom: 0px; line-height: 0.5;'>"
+            "<h2 style='margin-top: 0px; margin-bottom: 16px; padding-top: 0px; padding-bottom: 0px;'>"
             "Info"
             "</h2>",
             unsafe_allow_html=True
         )
-        st.markdown("#### Hosted by Climate Extremes Research Lab")
-        with st.container(key="email_container-2"):
-            st.markdown(
-                '<span style="font-size: 20px;">'
-                'https://sites.google.com/view/cerl'
-                '</span>',
-                unsafe_allow_html=True
-            )
-        st.markdown("#### Managed by Yechan Jeong")
-        with st.container(key="email_container-3"):
-            st.markdown(
-                '<span style="font-size: 20px;">'
-                'ycj1219@pukyong.ac.kr'
-                '</span>',
-                unsafe_allow_html=True
-            )
+        st.markdown(
+            "<h4 style='margin-top: 0px; margin-bottom: 4px; padding-top: 0px; padding-bottom: 0px;'>"
+            "Hosted by Climate Extremes Research Lab"
+            "</h4>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            '<span style="margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; font-size: 20px;">'
+            'https://sites.google.com/view/cerl'
+            '</span>',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<h4 style='margin-top: 0px; margin-bottom: 4px; padding-top: 0px; padding-bottom: 0px;'>"
+            "Managed by Yechan Jeong"
+            "</h4>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            '<span style="margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; font-size: 20px;">'
+            'ycj1219@pukyong.ac.kr'
+            '</span>',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            '<span style="margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; font-size: 20px;">'
+            '© 2026. CERL. All rights reserved.'
+            '</span>',
+            unsafe_allow_html=True
+        )
