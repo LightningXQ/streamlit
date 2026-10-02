@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
 import pandas as pd
@@ -65,13 +65,18 @@ def upload(file):
             file_bytes = file.getvalue()
 
             curr_date = datetime.now(ZoneInfo("Asia/Seoul"))
-            curr_mm_dd = curr_date.strftime("%m-%d")
+            next_date = datetime.now(ZoneInfo("Asia/Seoul")) + timedelta(days=1)
 
-            # 저장할 스토리지 경로 지정
+            curr_time = datetime.now(ZoneInfo("Asia/Seoul")).time()
+            cutoff_time = time(22, 0, 0)
+
+            upload_date = next_date if curr_time >= cutoff_time else curr_date
+
+            mm_dd = upload_date.strftime("%m-%d")
+
             bucket_name = "pknu_climate_big_data_contest_2026"
-            storage_path = f"submissions/{curr_mm_dd}/{file.name}"
+            storage_path = f"submissions/{mm_dd}/{file.name}"
 
-            # Supabase Storage 표준 업로드 실행
             response = client.storage.from_(bucket_name).upload(
                 path=storage_path,
                 file=file_bytes,
