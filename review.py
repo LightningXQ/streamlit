@@ -202,24 +202,46 @@ def load_nc(path: str | Path):
         )
 
 def calculate_mae(submission, answer, sub_time, ans_time, sub_lat, ans_lat, sub_lon, ans_lon):
+
+    # 2016-2019 홀수 달만 선택
+    sub_years = sub_time.astype("datetime64[Y]").astype(int) + 1970
+    sub_months = sub_time.astype("datetime64[M]").astype(int) % 12 + 1
+
+    eval_mask = (
+        (sub_years >= 2016)
+        & (sub_years <= 2019)
+        & (sub_months % 2 == 1)
+    )
+
+    submission = submission[eval_mask]
+    sub_time = sub_time[eval_mask]
+
     if submission.shape != answer.shape:
-        raise ValueError(f"Shape mismatch: submission={submission.shape}, expected={answer.shape}")
+        raise ValueError(
+            f"Shape mismatch: submission={submission.shape}, "
+            f"expected={answer.shape}"
+        )
+
     if not np.array_equal(sub_time, ans_time):
         raise ValueError("Time coordinates do not match.")
+
     if not np.allclose(sub_lat, ans_lat):
         raise ValueError("Latitude coordinates do not match.")
+
     if not np.allclose(sub_lon, ans_lon):
         raise ValueError("Longitude coordinates do not match.")
 
     answer_nan = ~np.isfinite(answer)
     submission_nan = ~np.isfinite(submission)
+
     if not np.array_equal(answer_nan, submission_nan):
         raise ValueError("The missing-value mask has been modified.")
 
     valid = ~answer_nan
+
     if not valid.any():
         raise ValueError("The answer file contains no finite evaluation cells.")
-    if (~np.isfinite(submission[valid])).any():
-        raise ValueError("Evaluation cells contain NaN or infinite predictions.")
 
-    return float(np.mean(np.abs(submission[valid] - answer[valid]))), int(valid.sum())
+    mae = np.mean(np.abs(submission[valid] - answer[valid]))
+
+    return float(mae), int(valid.sum())
