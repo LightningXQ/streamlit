@@ -552,9 +552,11 @@ with center:
             unsafe_allow_html=True
         )
         st.markdown(
-            '<span style="margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; font-size: 20px;">'
+            '<h5 style="margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px;">'
+            '<a href="https://sites.google.com/view/cerl" target="_blank">'
             'https://sites.google.com/view/cerl'
-            '</span>',
+            '</a>'
+            '</h5>',
             unsafe_allow_html=True
         )
         st.markdown(
@@ -564,14 +566,24 @@ with center:
             unsafe_allow_html=True
         )
         st.markdown(
-            '<span style="margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; font-size: 20px;">'
+            '<h5 style="margin-top: 0px; margin-bottom: 4px; padding-top: 0px; padding-bottom: 0px;">'
+            '<a href="mailto:ycj1219@pukyong.ac.kr">'
             'ycj1219@pukyong.ac.kr'
-            '</span>',
+            '</a>'
+            '</h5>',
             unsafe_allow_html=True
         )
         st.markdown(
-            '<span style="margin-top: 0px; margin-bottom: 12px; padding-top: 0px; padding-bottom: 0px; font-size: 20px;">'
+            '<h5 style="margin-top: 0px; margin-bottom: 28px; padding-top: 0px; padding-bottom: 0px;">'
+            '<a href="https://github.com/Ye-ChanJeong/AI-contest" target="_blank">'
+            'https://github.com/Ye-ChanJeong/AI-contest'
+            '</a>'
+            '</h5>',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            '<h6 style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">'
             '© 2026. CERL. All rights reserved.'
-            '</span>',
+            '</h6>',
             unsafe_allow_html=True
         )
