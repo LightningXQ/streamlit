@@ -138,14 +138,15 @@ with center:
 
     if selected == "Leaderboard":
         st.markdown(
-            "<h2 style='margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;'>"
+            "<h2 style='margin-top: 0px; margin-bottom: 4px; padding-top: 0px; padding-bottom: 0px;'>"
             "Leaderboard"
             "</h2>",
             unsafe_allow_html=True
         )
         st.markdown(
-            '<p style="margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px; color: gray; font-size: 14px;">'
-            '제출된 답안은 익일 0시에 반영됩니다.'
+            '<p style="margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px; color: gray; font-size: 14px; line-height: 1.2;">'
+            '제출된 답안은 당일 22시 이후에 반영됩니다.<br>'
+            '또한 중간 평가는 2016~2019년 홀수 달에 한하여 이루어집니다.'
             '</p>',
             unsafe_allow_html=True
         )
