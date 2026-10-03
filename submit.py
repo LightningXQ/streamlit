@@ -15,13 +15,6 @@ def submit(file, snum, sname):
     if not snum: st.warning("학번을 입력하세요!"); return
     if not sname: st.warning("이름을 입력하세요!"); return
 
-    curr_time = datetime.now(ZoneInfo("Asia/Seoul")).time()
-    cutoff_time = time(22, 0, 0)
-
-    if curr_time >= cutoff_time:
-        st.warning("답안은 당일 오후 10시 이전에 제출해야 합니다.")
-        return
-
     try:
         rows = client.table("team_member").select("*").execute()
         df = pd.DataFrame(rows.data)
