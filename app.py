@@ -434,8 +434,13 @@ with center:
                 submit_confirm_dialog()
 
         st.markdown(
-            "<p style='color: #909090; font-size: 14px; margin-top: -8px; margin-bottom: 8px; padding-top: 0px; padding-bottom: 0px;'>"
-            "답안은 하루에 한 번만 제출할 수 있으며, 오후 10시 이전에 제출된 답안만 당일의 답안으로 인정됩니다.<br>"
+            "<p style='color: red; font-size: 16px; margin-top: -8px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; font-weight: bold;'>"
+            "주의: 당일 오후 10시 이후에 제출된 답안은 익일에 제출된 답안으로 처리됩니다."
+            "</p>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<p style='color: #909090; font-size: 14px; margin-top: -4px; margin-bottom: 8px; padding-top: 0px; padding-bottom: 0px;'>"
             "자세한 사항은 규칙을 참고하세요."
             "</p>",
             unsafe_allow_html=True
