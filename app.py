@@ -99,10 +99,6 @@ with st.sidebar:
 # 클라이언트의 화면 너비(px) 가져오기
 ui_width = st_javascript("window.innerWidth")
 
-# 화면 크기가 아직 로드되지 않았을 때의 기본값 설정
-if ui_width is None:
-    ui_width = 1000
-
 if ui_width < 768:
     left_margin, center, right_margin = st.columns([1, 20, 1])
 else:
@@ -144,10 +140,16 @@ with center:
             unsafe_allow_html=True
         )
         st.markdown(
-            '<p style="margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px; color: gray; font-size: 14px; line-height: 1.2;">'
+            '<p style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; color: gray; font-size: 14px; line-height: 1.3;">'
             '제출된 답안은 당일 22시 이후에 반영됩니다.<br>'
             '또한 중간 평가는 2016~2019년 홀수 달에 한하여 이루어집니다.'
             '</p>',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<p style='color: red; font-size: 16px; margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px; font-weight: bold; line-height: 1.3;'>"
+            "주의: 제출물의 좌표계 또는 배열 구조가 지정된 형식과 일치하지 않는 경우에는 점수가 999.0으로 표시됩니다."
+            "</p>",
             unsafe_allow_html=True
         )
 
@@ -164,6 +166,10 @@ with center:
 
                 df["best_score"] = pd.to_numeric(df["best_score"])
                 df["recent_score"] = pd.to_numeric(df["recent_score"])
+
+                if ui_width <= 768:
+                    df["best_score"] = df["best_score"].round(3)
+                    df["recent_score"] = df["recent_score"].round(3)
 
                 df["best_score_date"] = pd.to_datetime(df["best_score_date"])
                 df["recent_score_date"] = pd.to_datetime(df["recent_score_date"])
@@ -273,10 +279,6 @@ with center:
                         if (match) {
                             let score = match[1];
                             const date = match[2];
-                            if (offset < 0) {
-                                score = Number(score);
-                                score = score.toFixed(3);
-                            }
 
                             if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
                                 this.eGui.innerHTML = `

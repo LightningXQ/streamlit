@@ -156,7 +156,13 @@ def analyze_submissions(temp_dir):
 
         except Exception as e:
             st.error(f"❌ 채점 중 오류 발생 ({filename}): {e}")
-            return None
+            st.error(f"❌ {filename} 파일은 999점으로 반영됩니다.")
+            # bypass
+            result.append({
+                "team_name": filename[7:-3],
+                "score": 999,
+                "n_eval": 0
+            })
 
     st.success("✨ 채점이 완료되었습니다.")
 
