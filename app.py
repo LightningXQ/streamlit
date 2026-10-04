@@ -148,7 +148,7 @@ with center:
         )
         st.markdown(
             "<p style='color: red; font-size: 16px; margin-top: 0px; margin-bottom: 20px; padding-top: 0px; padding-bottom: 0px; font-weight: bold; line-height: 1.3;'>"
-            "주의: 제출물의 좌표계 또는 배열 구조가 지정된 형식과 일치하지 않는 경우에는 점수가 999.0으로 표시됩니다."
+            "주의: 제출물의 좌표계 또는 NaN 마스킹이 일치하지 않는 경우에는 점수가 999.0으로 표시됩니다."
             "</p>",
             unsafe_allow_html=True
         )
