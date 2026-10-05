@@ -5,6 +5,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import numpy as np
+import pandas as pd
 import streamlit as st
 import xarray as xr
 from st_supabase_connection import SupabaseConnection
@@ -174,6 +175,16 @@ def update_leaderboard(result):
 
     for idx, row in enumerate(result):
         st.write(f"📤 채점 결과 업데이트 중 ({idx + 1}/{len(result)}): {row["team_name"]} 팀")
+
+        # 한글 팀명 lookup
+        lookup_rows = client.table("team_name_lookup").select("*").execute()
+        df = pd.DataFrame(lookup_rows.data)
+
+        matched_row = df[df["converted_team_name"] == row["team_name"]]
+
+        if not matched_row.empty:
+            row["team_name"] = matched_row["original_team_name"].iloc[0]
+
         try:
             response = client.rpc(
                 "upsert_leaderboard", {

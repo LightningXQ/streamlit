@@ -67,8 +67,21 @@ def upload(file):
 
             mm_dd = upload_date.strftime("%m-%d")
 
+            # 한글 팀명 lookup
+            submit_team_name = file.name[7:-3]
+
+            lookup_rows = client.table("team_name_lookup").select("*").execute()
+            df = pd.DataFrame(lookup_rows.data)
+
+            matched_row = df[df["original_team_name"] == submit_team_name]
+
+            filename = file.name
+            if not matched_row.empty:
+                converted_name = matched_row["converted_team_name"].iloc[0]
+                filename = file.name[:7] + converted_name + file.name[-3:]
+
             bucket_name = "pknu_climate_big_data_contest_2026"
-            storage_path = f"submissions/{mm_dd}/{file.name}"
+            storage_path = f"submissions/{mm_dd}/{filename}"
 
             response = client.storage.from_(bucket_name).upload(
                 path=storage_path,
