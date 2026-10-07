@@ -280,7 +280,7 @@ with center:
                             let score = match[1];
                             const date = match[2];
 
-                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
+                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2 || rowIndex === 3 || rowIndex === 4) {
                                 this.eGui.innerHTML = `
                                     <span style="font-size: ${28 + 2 * offset}px; font-weight: 500; font-style: italic; line-height: 1.0;">
                                         ${score}
@@ -300,7 +300,7 @@ with center:
                                 `;
                             }
                         } else {
-                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2) {
+                            if (rowIndex === 0 || rowIndex === 1 || rowIndex === 2 || rowIndex === 3 || rowIndex === 4) {
                                 this.eGui.innerHTML = `
                                     <span style="font-size: 28px; font-weight: 500; font-style: italic;">
                                         ${cellValue}
@@ -326,27 +326,30 @@ with center:
                 function(params) {
                     if (params.node.rowIndex === 0) {
                         return {
-                            'background': 'linear-gradient(90deg, #FFD700 -50%, #FFFFFF 130%)',
+                            'background': 'linear-gradient(90deg, #FFE066 0%, #F5A623 100%)',
                         };
                     } else if (params.node.rowIndex === 1) {
                         return {
-                            'background': 'linear-gradient(90deg, #C0C0C0 -50%, #FFFFFF 130%)',
+                            'background': 'linear-gradient(90deg, #E0E0E0 0%, #9EA7B0 100%)',
                         };
                     } else if (params.node.rowIndex === 2) {
                         return {
-                            'background': 'linear-gradient(90deg, #CD7F32 -50%, #FFFFFF 130%)',
+                            'background': 'linear-gradient(90deg, #E5A97F 0%, #B36B3D 100%)',
+                        };
+                    } else if (params.node.rowIndex === 3 || params.node.rowIndex === 4) {
+                        return {
+                            'background': 'linear-gradient(90deg, #FFFFFF 0%, #FFEFBA 100%)',
                         };
                     }
-                    return null;
                 }
                 """)
 
                 row_height = JsCode("""
                 function(params) {
-                    if (params.node.rowIndex === 0 || params.node.rowIndex === 1 || params.node.rowIndex === 2) {
-                        return 60;
+                    if (params.node.rowIndex === 0 || params.node.rowIndex === 1 || params.node.rowIndex === 2 || params.node.rowIndex === 3 || params.node.rowIndex === 4) {
+                        return 54;
                     }
-                    return 40;
+                    return 36;
                 }
                 """)
 
