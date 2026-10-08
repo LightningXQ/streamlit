@@ -285,7 +285,7 @@ with center:
                                     <span style="font-size: ${28 + 2 * offset}px; font-weight: 500; font-style: italic; line-height: 1.0;">
                                         ${score}
                                     </span>
-                                    <span style="font-size: ${14 + offset}px; color: gray; line-height: 1.0;">
+                                    <span style="font-size: ${14 + offset}px; color: black; font-weight: 500; line-height: 1.0;">
                                         ${date}
                                     </span>
                                 `;

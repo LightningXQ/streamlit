@@ -113,9 +113,6 @@ def analyze_submissions(temp_dir):
     if len(answer_files) == 0:
         st.error("정답 파일(.nc)을 찾을 수 없습니다.")
         return None
-    if len(answer_files) > 1:
-        st.error("정답 파일(.nc)은 오직 하나여야 합니다.")
-        return None
 
     st.info("🔄 채점을 시작합니다.")
     progress_bar = st.progress(0)
@@ -219,7 +216,6 @@ def load_nc(path: str | Path):
         )
 
 def calculate_mae(submission, answer, sub_time, ans_time, sub_lat, ans_lat, sub_lon, ans_lon):
-
     # 2016-2019 홀수 달만 선택
     sub_years = sub_time.astype("datetime64[Y]").astype(int) + 1970
     sub_months = sub_time.astype("datetime64[M]").astype(int) % 12 + 1
